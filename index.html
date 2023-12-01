@@ -19,7 +19,7 @@
     // ❗ Watch the Guided Project to learn proper debugging technique.
 
     // 👉 CHALLENGE 1
-    // 🧠 The function processSingleLearner takes a learner object as its argument, and returns it after some modifications.
+    //$ 🧠 The function processSingleLearner takes a learner object as its argument, and returns it after some modifications.
     // 🧠 If the learner has a "lovesJS" property set to 0, we need to set it to false.
     // 🧠 If the learner has a "lovesJS" property set to 1, we need to set it to true.
     // 🤔 The reason is that in some databases, Booleans true and false are actually stored as 1 and 0 respectively.
@@ -27,10 +27,14 @@
     // 🧠 Examples of usage:
     // processSingleLearner({ name: "Elisabeth", lovesJS: 1 }) // should return { name: "Elisabeth", lovesJS: true }
     // processSingleLearner({ name: "Pete", age: 23, lovesJS: 0 }) // should return { name: "Pete", age: 23, lovesJS: false }
-    const processSingleLearner = () => {
-
+    const processSingleLearner = (Learner) => {
+      if (Learner['lovesJS'] === 1) {
+        Learner['lovesJS'] = true
+      } else if (Learner['lovesJS'] === 0) {
+        Learner['lovesJS'] = false
+      }
+      return Learner
     }
-
     // 👉 CHALLENGE 2
     // 🧠 The function processLearnerLoop takes an array of learner objects as its argument, and returns it after some modifications.
     // 🧠 For each learner, if the learner has a "lovesJS" property set to 0, we need to set it to false.
@@ -41,8 +45,17 @@
     // ❗ Notes:
     // 🧠 There are many approaches to this problem: using a loop, using forEach, using map...
     // 🧠 Solve this challenge using a for/in loop or a for loop.
-    const processLearnersLoop = () => {
+    const processLearnersLoop = (array) => {
+      for (let i in array) {
+        //console.log(array[i])
+        if (array[i].lovesJS === 0) {
+          array[i].lovesJS = false
+        } else if (array[i].lovesJS === 1) {
+          array[i].lovesJS = true
+        }
 
+      }
+      return array
     }
 
     // 👉 CHALLENGE 3
@@ -51,8 +64,19 @@
     // ❗ Notes:
     // 🧠 Solve this challenge using the forEach method of the learners array.
     // 🧠 Use arrow functions whenever possible.
-    const processLearnerForEach = () => {
-
+    const processLearnerForEach = (array) => {
+      //array.forEach(theFunk)
+      const theFunk = () => {
+        for (let i in array) {
+          if (array[i].lovesJS === 0) {
+            array[i].lovesJS = false
+          } else if (array[i].lovesJS === 1) {
+            array[i].lovesJS = true
+          }
+        }
+      }
+      array.forEach(theFunk)
+      return array
     }
 
     // 👉 CHALLENGE 4
@@ -61,29 +85,58 @@
     // ❗ Notes:
     // 🧠 Solve this challenge using the map method of the learners array.
     // 🧠 Use arrow functions.
-    const processLearnerMap = () => {
-
+    const processLearnerMap = (array) => {
+      let arrayMapped = array.map(item => {
+        if (item.lovesJS === 0) {
+          item.lovesJS = false
+        } else if (item.lovesJS === 1) {
+          item.lovesJS = true
+        }
+        return item
+      })
+      return arrayMapped
     }
 
     // 👉 CHALLENGE 5
-    // 🧠 The function getJavaScriptLoversForEach takes an array of learner objects and returns an array or a string.
+    //$ 🧠 The function getJavaScriptLoversForEach takes an array of learner objects and returns an array or a string.
     // 🧠 The returned array must contain only the learners who love JavaScript.
     // 🧠 However, if nobody loves JavaScript the function returns the string "no JS lovers here!".
     // 🧠 Another complication is that the lovesJS prop on the learner could be a Boolean (false/true) or a number (0/1).
     // ❗ Notes:
     // 🧠 Solve this challenge using the forEach method of the learners array.
     // 🧠 You will need to declare a result array into which you push learners from inside your forEach loop.
-    const getJavaScriptLoversForEach = () => {
-
+    const getJavaScriptLoversForEach = (array) => {
+      let result = []
+      let str = 'no JS lovers here!'
+      array.forEach(person => {
+        if (person.lovesJS) {
+          result.push(person)
+        }
+      })
+      if (!result.length) {
+        return str
+      }
+      return result
     }
+
 
     // 👉 CHALLENGE 6
     // 🧠 The function getJavaScriptLoversFilter takes an array of learner objects and returns an array or a string.
     // 🧠 It should work exactly the same as the getJavaScriptLoversForEach function above.
     // ❗ Notes:
     // 🧠 Solve this challenge using the filter method of the learners array.
-    const getJavaScriptLoversFilter = () => {
-
+    const getJavaScriptLoversFilter = (array) => {
+      let result = []
+      let str = 'no JS lovers here!'
+      array.filter(person => {
+        if (person.lovesJS) {
+          result.push(person)
+        }
+      })
+      if (!result.length) {
+        return str
+      }
+      return result
     }
 
     // 👉 CHALLENGE 7
@@ -98,8 +151,16 @@
     // ❗ Notes:
     // 🧠 This could be solved by using filter to make an array of odd integers, and then using forEach to add them up.
     // 🧠 Or you could opt for solving everything with a single forEach which is the recommended approach (saves a loop).
-    const sumOddInts = () => {
-
+    const sumOddInts = (array) => {
+      let ofOdds = []
+      let sum = 0
+      array.forEach(num => {
+        if (num % 2 === 1) {
+          ofOdds.push(num)
+          sum += num
+        }
+      })
+      return [sum, ofOdds]
     }
 
     // 👉 CHALLENGE 8
@@ -113,8 +174,16 @@
     // checkInts(2, 6) // should return ["even", "even"]
     // ❗ Notes:
     // 🧠 Solve this problem using rest parameters and map.
-    const checkInts = () => {
-
+    const checkInts = (...nums) => {
+      if (!nums.length) {
+        return 'pass some arguments, yo!'
+      }
+      return nums.map(num => {
+        if (num % 2 === 0) {
+          return 'even'
+        }
+        return 'odd'
+      })
     }
 
     // 🧪 TESTS, do not work below this line
